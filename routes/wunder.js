@@ -4,6 +4,7 @@
 const express = require('express')
 const Wunderground = require('node-weatherunderground')
 const router = express.Router()
+const moment = require('moment')
 
 router.get('/:action', function(req, res, next){
   // Make sure the parameters are present
@@ -25,15 +26,9 @@ router.get('/:action', function(req, res, next){
   }
   // get the current date and time, consider moving this to a controller at somepoint
   // we're going to use this as the base by which we compare the distance of predictions
-  var date = new Date()
-  var currentDate = {
-    currentYear: date.getFullYear(),
-    // note january = 0 so i'm gonna add 1
-    currentMonth: (date.getMonth() + 1),
-    currentDay: date.getDate(),
-    currentHour: date.getHours()
-  }
-  console.log(date)
+  var currentDate = moment()
+  console.log(currentDate)
+
   // API key and location
   var opts = {
     key: process.env.API_KEY,
@@ -55,24 +50,29 @@ router.get('/:action', function(req, res, next){
   if (action == 'forecast'){
     client.hourly10day(opts, function(err, data){
       if (err){
+        console.log(data);
         throw err
         return
       }
       var predictions = []
       for (i=0; i < data.length; i++){
+        var month = (data[i].FCTTIME.mon_padded)
+        var day = (data[i].FCTTIME.mday_padded )
+        var year = (data[i].FCTTIME.year)
+        var hour = (data[i].FCTTIME.hour_padded)
+        var dateString = year + '-' + month + '-' + day + '-' + hour
+        var end = moment(dateString, 'YYYY-MM-DD-HH');
+        console.log(end);
+        distance = end.diff(currentDate, "hours")
+        console.log(distance);
+        end = end.format('YYYY-MM-DD-HH')
         var prediction = {
-          date: {
-            dateString: data[i].FCTTIME.pretty,
-            year: data[i].FCTTIME.year,
-            month: data[i].FCTTIME.mon,
-            day: data[i].FCTTIME.mday,
-            hour: data[i].FCTTIME.hour,
-          },
+          date: end,
+          hours_from_fruition: distance,
           forecast: {
             temp: data[i].temp.english,
             weather: data[i].condition
-          },
-          timeOfPrediction:{currentDate}
+          }
         }
         predictions.push(prediction)
       }
