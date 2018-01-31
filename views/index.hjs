@@ -5,7 +5,15 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>{{ title }}</h1>
-    <p>Welcome to {{ title }}</p>
+    <form action='/wunder/forecast' method='post'>
+      <h4>Create an entry</h4>
+      <input type='text' name='city'placeholder="city" />
+      <input type'text' name='state' placeholder='state' />
+      <input type='submit' value='submit'/>
+    </form>
+    <form action='/wunder/getDb' method='get'>
+      <h4>View the database</h4>
+      <input type='submit' value='Enter' />
+    </form>
   </body>
 </html>
