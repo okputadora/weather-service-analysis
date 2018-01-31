@@ -13,6 +13,7 @@
     "express": "~4.15.5",
     "hjs": "~0.0.6",
     "moment": "^2.20.1",
+    "mongoose": "^5.0.2",
     "morgan": "~1.9.0",
     "node-weatherunderground": "^1.2.0",
     "serve-favicon": "~2.4.5"

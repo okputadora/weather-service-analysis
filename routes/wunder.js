@@ -54,7 +54,7 @@ router.get('/:action', function(req, res, next){
         throw err
         return
       }
-      var predictions = []
+      var forecasts = []
       for (i=0; i < data.length; i++){
         var month = (data[i].FCTTIME.mon_padded)
         var day = (data[i].FCTTIME.mday_padded )
@@ -76,9 +76,13 @@ router.get('/:action', function(req, res, next){
             weather: data[i].condition
           }
         }
-        predictions.push(prediction)
+        forecasts.push(prediction)
+        predction = {
+          timeOfPrediction: currentDate,
+          predictions: forecasts
+        }
       }
-      res.json(predictions)
+      res.json(forecasts)
     })
   }
 })
