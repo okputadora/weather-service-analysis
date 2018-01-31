@@ -63,8 +63,10 @@ router.get('/:action', function(req, res, next){
         var dateString = year + '-' + month + '-' + day + '-' + hour
         var end = moment(dateString, 'YYYY-MM-DD-HH');
         console.log(end);
+        // consider adding 1 to distance as the first operation seems to be working
+        // with a rounded currentDate making the distance 0 when we want 1
         distance = end.diff(currentDate, "hours")
-        console.log(distance);
+        distance = distance + 1;
         end = end.format('YYYY-MM-DD-HH')
         var prediction = {
           date: end,
