@@ -7,14 +7,14 @@ module.exports = {
   post: function(params){
     return new Promise(function(resolve, reject){
       var client = new Wunderground()
-      // perfrom this operation every hour
+      var currentDate = moment().format('YYYY-MM-DD-HH')
+      var forecasts = []
       client.hourly10day(params, function(err, data){
         if (err){
           throw err
           return
         }
         // parse data
-        var forecasts = []
         for (i=0; i < data.length; i++){
           var month = (data[i].FCTTIME.mon_padded)
           var day = (data[i].FCTTIME.mday_padded )
@@ -22,34 +22,23 @@ module.exports = {
           var hour = (data[i].FCTTIME.hour_padded)
           var dateString = year + '-' + month + '-' + day + '-' + hour
           var end = moment(dateString, 'YYYY-MM-DD-HH')
-
-
-          distance = end.diff(currentDate, "hours")
-          distance = distance + 1;
           end = end.format('YYYY-MM-DD-HH')
 
           // build model
           var forecast = {
-            date: end,
-            hours_from_fruition: distance,
-            forecast: {
-              temp: data[i].temp.english,
-              weather: data[i].condition
-            }
+            city: params.city,
+            state: params.state,
+            timeOfPrediction: currentDate,
+            timeOfFruition: end,
+            temp: data[i].temp.english,
+            condition: data[i].condition
           }
           forecasts.push(forecast)
         }
-        var currentDate = moment().format('YYYY-MM-DD-HH')
-        console.log(currentDate);
-        prediction = {
-          city: params.city,
-          state: params.state,
-          timeOfPrediction: currentDate,
-          predictions: forecasts
-        }
-        console.log(params.city)
-        Prediction.create(prediction, function(err, prediction){
+        console.log('getting to here')
+        Prediction.collection.insertMany(forecasts, function(err, prediction){
           if (err){
+            console.log('couldnt create')
             reject(err)
             return
           }
