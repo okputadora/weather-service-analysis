@@ -5,9 +5,9 @@ var Promise = require('bluebird')
 
 module.exports = {
   post: function(params){
-    console.log()
     return new Promise(function(resolve, reject){
       var client = new Wunderground()
+      // perfrom this operation every hour
       client.hourly10day(params, function(err, data){
         if (err){
           throw err
@@ -22,13 +22,14 @@ module.exports = {
           var hour = (data[i].FCTTIME.hour_padded)
           var dateString = year + '-' + month + '-' + day + '-' + hour
           var end = moment(dateString, 'YYYY-MM-DD-HH')
-          var currentDate = moment()
+
+
           distance = end.diff(currentDate, "hours")
           distance = distance + 1;
           end = end.format('YYYY-MM-DD-HH')
 
           // build model
-          var prediction = {
+          var forecast = {
             date: end,
             hours_from_fruition: distance,
             forecast: {
@@ -36,13 +37,17 @@ module.exports = {
               weather: data[i].condition
             }
           }
-          forecasts.push(prediction)
+          forecasts.push(forecast)
         }
+        var currentDate = moment().format('YYYY-MM-DD-HH')
+        console.log(currentDate);
         prediction = {
+          city: params.city,
+          state: params.state,
           timeOfPrediction: currentDate,
           predictions: forecasts
         }
-        console.log('creating new prediction')
+        console.log(params.city)
         Prediction.create(prediction, function(err, prediction){
           if (err){
             reject(err)
@@ -62,6 +67,19 @@ module.exports = {
           return
         }
         resolve(predictions);
+      })
+    })
+  },
+
+  destroy: function(){
+    return new Promise(function(resolve, reject){
+      Predcition.remove({}, function(err, result){
+        if (err){
+          reject(err)
+          return
+        }
+        console.log("dropping the table")
+        resolve(result)
       })
     })
   }

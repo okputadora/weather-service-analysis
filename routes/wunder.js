@@ -6,8 +6,21 @@ const Wunderground = require('node-weatherunderground')
 const PredictionController = require('../controllers/PredictionController')
 const router = express.Router()
 
+// begins the intiation of a new model-building process
+// models take a while to build cause we're waiting on real weather data to come
+// in each hour
 router.post('/:action', function(req, res, next){
   var action = req.params.action
+  if (action == 'delete'){
+    PredictionController.destroy()
+    .then(function(result){
+      res.json(result)
+    })
+    .catch(function(err){
+      res.json(err)
+    })
+    return
+  }
   // Make sure the parameters are present
   var city = req.body.city
   if (city == null){
@@ -30,8 +43,8 @@ router.post('/:action', function(req, res, next){
     city: city,
     state: state
   }
-  console.log(params);
-  if (action == 'forecast'){
+  if (action == 'initiateModel'){
+    // initiate construction of the model
     PredictionController.post(params)
     .then(function(result){
       res.json(result)
@@ -42,31 +55,8 @@ router.post('/:action', function(req, res, next){
     return
   }
 })
-  //
-  // // get the current date and time, consider moving this to a controller at somepoint
-  // // we're going to use this as the base by which we compare the distance of predictions
-  //
-  // console.log(currentDate)
-  //
-  // // API key and location
-  // var opts = {
-  //   key: process.env.API_KEY,
-  //   city: city,
-  //   state: state
-  // }
-  //
-  // var action = req.params.action
-  // if (action == 'current'){
-  //   client.conditions(opts, function(err, data) {
-  //     if (err){
-  //       throw err
-  //       return
-  //     }
-  //     res.json(data)
-  //   });
-  //   return;
-  // }
-router.get('/:getDb', function(req, res, next){
+
+router.get('/', function(req, res, next){
   console.log('getting predictions')
   PredictionController.get()
   .then(function(result){

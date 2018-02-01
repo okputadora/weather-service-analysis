@@ -3,16 +3,26 @@
   <head>
     <title>{{ title }}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type='text/javascript' src="../public/javascripts/googleChart.js"></script>
   </head>
+
+
   <body>
-    <form action='/wunder/forecast' method='post'>
+    <div id='chart1'>
+
+    </div>
+    <form action='/wunder/initiateModel' method='post'>
       <h4>Create an entry</h4>
       <input type='text' name='city'placeholder="city" />
       <input type'text' name='state' placeholder='state' />
       <input type='submit' value='submit'/>
     </form>
-    <form action='/wunder/getDb' method='get'>
+    <form action='/wunder' method='get'>
       <h4>View the database</h4>
+      <input type='submit' value='Enter' />
+    </form>
+    <form action='/wunder/delete' method='post'>
+      <h4>Clear the database</h4>
       <input type='submit' value='Enter' />
     </form>
   </body>
