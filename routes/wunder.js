@@ -56,15 +56,32 @@ router.post('/:action', function(req, res, next){
   }
 })
 
-router.get('/', function(req, res, next){
-  console.log('getting predictions')
-  PredictionController.get()
-  .then(function(result){
-    res.json(result)
-  })
-  .catch(function(err){
-    res.json(err)
-  })
+router.get('/:action', function(req, res, next){
+  var action = req.params.action
+  params = {
+    key: process.env.API_KEY,
+    city: req.query.city,
+    state: req.query.state
+  }
+
+  if (action == 'displayGraph'){
+    PredictionController.getByParams(params)
+    .then(function(result){
+      res.json(result)
+    })
+    .catch(function(err){
+      res.json(err)
+    })
+  }
+  if (action == 'displayDb'){
+    PredictionController.get()
+    .then(function(result){
+      res.json(result)
+    })
+    .catch(function(err){
+      res.json(err)
+    })
+  }
 })
 
 module.exports = router;

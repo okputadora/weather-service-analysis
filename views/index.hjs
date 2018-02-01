@@ -12,12 +12,26 @@
 
     </div>
     <form action='/wunder/initiateModel' method='post'>
-      <h4>Create an entry</h4>
+      <h4>Start a forecast</h4>
+      <p>
+        pick a city that you want to the weather accuracy for. This will take a
+        snapshot of the 10 day forecast every hour and enter it into the database.
+      </p>
+      <p>
+        when you display the accuracy, the current weather will be compared with
+        the predictions from these snapshots
+      </p>
       <input type='text' name='city'placeholder="city" />
       <input type'text' name='state' placeholder='state' />
       <input type='submit' value='submit'/>
     </form>
-    <form action='/wunder' method='get'>
+    <h4>Display Accuracy</h4>
+    <form action='/wunder/displayGraph' method='get'>
+      <input type='text' name='city'placeholder="city" />
+      <input type'text' name='state' placeholder='state' />
+      <input type='submit' value='submit'/>
+    </form>
+    <form action='/wunder/displayDb' method='get'>
       <h4>View the database</h4>
       <input type='submit' value='Enter' />
     </form>

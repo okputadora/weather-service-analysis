@@ -7,8 +7,9 @@ module.exports = {
   post: function(params){
     return new Promise(function(resolve, reject){
       var client = new Wunderground()
-      var currentDate = moment().format('YYYY-MM-DD-HH')
+      var currentTime = moment().format('YYYY-MM-DD-HH')
       var forecasts = []
+      console.log(params)
       client.hourly10day(params, function(err, data){
         if (err){
           throw err
@@ -28,7 +29,7 @@ module.exports = {
           var forecast = {
             city: params.city,
             state: params.state,
-            timeOfPrediction: currentDate,
+            timeOfPrediction: currentTime,
             timeOfFruition: end,
             temp: data[i].temp.english,
             condition: data[i].condition
@@ -56,6 +57,37 @@ module.exports = {
           return
         }
         resolve(predictions);
+      })
+    })
+  },
+
+  getByParams: function(params){
+    return new Promise(function(resolve, reject){
+      console.log(params)
+      var currentTime = moment().format('YYYY-MM-DD-HH')
+      var client = new Wunderground()
+      client.conditions(params, function(err, data){
+        console.log('querying wunderapi')
+        if (err){
+          throw err
+          return
+        }
+        var temp = data.temp_f
+        var condition = data.weather
+        // for (i=0; i < data.length; i++){
+        Prediction.find({city: params.city, state: params.state, timeOfFruition: currentTime}, function(err, predictions){
+          if (err){
+            reject(err)
+            return
+          }
+          resolve({
+            prediction: predictions,
+            actual: {
+              temp: temp,
+              condition: condition
+            }
+          })
+        })
       })
     })
   },
