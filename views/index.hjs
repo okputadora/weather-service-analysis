@@ -2,42 +2,61 @@
 <html>
   <head>
     <title>{{ title }}</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script type='text/javascript' src="../public/javascripts/googleChart.js"></script>
+
   </head>
-
-
+  <script
+    src="http://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+    crossorigin="anonymous">
+  </script>
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+    integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+    crossorigin="anonymous">
+  </script>
+  <script type='text/javascript' src="../public/javascripts/googleChart.js"></script>
   <body>
-    <div id='chart1'>
-
+    {{> header}}
+    <div class='container'>
+      <div class='row'>
+        <div class='panel panel-default'>
+          <div class='panel-heading'>Start a forecast</div>
+          <div class='panel-body'>
+            <p>
+              Pick a city that you want to test the weather accuracy for. This will take a
+              snapshot of the 10 day forecast every hour and enter it into the database.
+            </p>
+            <p>
+              when you display the accuracy, the current weather will be compared with
+              the predictions from these snapshots
+            </p>
+            <form action='/wunder/initiateModel' method='post'>
+              <input type='text' name='city'placeholder="city" />
+              <input type'text' name='state' placeholder='state' />
+              <input type='submit' value='submit'/>
+            </form>
+          </div>
+          </div>
+        <div class='panel panel-default'>
+          <div class='panel-heading'>Display Accuracy</div>
+          <div class='panel-body'>
+            <form action='/wunder/displayGraph' method='get'>
+              <input type='text' name='city'placeholder="city" />
+              <input type'text' name='state' placeholder='state' />
+              <input type='submit' value='submit'/>
+            </form>
+          </div>
+        </div>
+          <form action='/wunder/displayDb' method='get'>
+            <h4>View the database</h4>
+            <input type='submit' value='Enter' />
+          </form>
+        </div>
+      </div>
     </div>
-    <form action='/wunder/initiateModel' method='post'>
-      <h4>Start a forecast</h4>
-      <p>
-        pick a city that you want to the weather accuracy for. This will take a
-        snapshot of the 10 day forecast every hour and enter it into the database.
-      </p>
-      <p>
-        when you display the accuracy, the current weather will be compared with
-        the predictions from these snapshots
-      </p>
-      <input type='text' name='city'placeholder="city" />
-      <input type'text' name='state' placeholder='state' />
-      <input type='submit' value='submit'/>
-    </form>
-    <h4>Display Accuracy</h4>
-    <form action='/wunder/displayGraph' method='get'>
-      <input type='text' name='city'placeholder="city" />
-      <input type'text' name='state' placeholder='state' />
-      <input type='submit' value='submit'/>
-    </form>
-    <form action='/wunder/displayDb' method='get'>
-      <h4>View the database</h4>
-      <input type='submit' value='Enter' />
-    </form>
-    <form action='/wunder/delete' method='post'>
-      <h4>Clear the database</h4>
-      <input type='submit' value='Enter' />
-    </form>
   </body>
 </html>

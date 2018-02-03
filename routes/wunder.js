@@ -38,6 +38,10 @@ router.post('/:action', function(req, res, next){
     })
     return
   }
+  // i should be able to set this in the model but for some reason
+  // 'lowercase: true' is not working
+  city = city.toLowerCase();
+  state = state.toLowerCase();
   var params = {
     key: process.env.API_KEY,
     city: city,
@@ -58,13 +62,17 @@ router.post('/:action', function(req, res, next){
 
 router.get('/:action', function(req, res, next){
   var action = req.params.action
-  params = {
-    key: process.env.API_KEY,
-    city: req.query.city,
-    state: req.query.state
-  }
 
   if (action == 'displayGraph'){
+    var city = req.query.city
+    var city = city.toLowerCase()
+    var state = req.query.state
+    var state = state.toLowerCase()
+    params = {
+      key: process.env.API_KEY,
+      city: city,
+      state: state
+    }
     PredictionController.getByParams(params)
     .then(function(result){
       res.json(result)

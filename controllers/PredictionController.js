@@ -64,8 +64,11 @@ module.exports = {
   getByParams: function(params){
     return new Promise(function(resolve, reject){
       console.log(params)
+      // get the current time
       var currentTime = moment().format('YYYY-MM-DD-HH')
+      console.log(currentTime)
       var client = new Wunderground()
+      // get the current conditions
       client.conditions(params, function(err, data){
         console.log('querying wunderapi')
         if (err){
@@ -74,8 +77,8 @@ module.exports = {
         }
         var temp = data.temp_f
         var condition = data.weather
-        // for (i=0; i < data.length; i++){
-        Prediction.find({city: params.city, state: params.state, timeOfFruition: currentTime}, function(err, predictions){
+        // pull from the database
+        Prediction.find({state: params.state, city: params.city, timeOfFruition: '2018-02-03-19'}, function(err, predictions){
           if (err){
             reject(err)
             return
