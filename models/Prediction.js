@@ -17,7 +17,7 @@ PredictionSchema.methods.fruitionFilter = function(time){
   var forecast = this.forecasts.filter(function(item){
     return item.timeOfFruition === time
   })
-
+  delete forecast.timeOfFruition
   // get the distance of the prediction
   var predictionTime = moment(this.timeOfPrediction, "YYYY-MM-DD-HH")
   var fruitionTime = moment(time, "YYYY-MM-DD-HH")
@@ -26,7 +26,7 @@ PredictionSchema.methods.fruitionFilter = function(time){
   return {
     timeOfPrediction: this.timeOfPrediction,
     distance: distance,
-    forecast: forecast[0]
+    forecast: forecast[0].temp
   }
 }
 

@@ -75,7 +75,20 @@ router.get('/:action', function(req, res, next){
     }
     PredictionController.getByParams(params)
     .then(function(result){
-      res.json(result)
+      console.log(result)
+      res.render('displayAccuracy', {
+        title: 'Weather Accuracy',
+        city: result.city,
+        state: result.state,
+        time: result.currentTime,
+        temp: result.currentTemp,
+        condition: result.condition,
+        forecasts: result.predictionData,
+        partials: {
+          header: '../views/partials/header'
+        }
+      });
+      // res.json(result)
     })
     .catch(function(err){
       res.json(err)

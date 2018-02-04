@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  </head>
+  <script
+    src="http://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+    crossorigin="anonymous">
+  </script>
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+    integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+    crossorigin="anonymous">
+  </script>
+  <script type='text/javascript' src="../public/javascripts/googleChart.js"></script>
+  <body>
+    {{> header}}
+    <div class='container'>
+      <h3>{{city}}, {{state}}</h3>
+      <h4>{{time}}</h4>
+      <h2>The current weather is {{temp}} degrees and {{condition}}</h2>
+      {{#forecasts}}
+        <p>at {{timeOfPrediction}} we thought it would be {{forecast}} degrees right now</p>
+      {{/forecasts}}
+    </div>
+  </body>

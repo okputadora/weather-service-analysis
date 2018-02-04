@@ -64,6 +64,7 @@ module.exports = {
     })
   },
 
+  // used for displaying the graph
   getByParams: function(params){
     return new Promise(function(resolve, reject){
       console.log(params)
@@ -95,8 +96,11 @@ module.exports = {
             list.push(prediction.fruitionFilter(currentTime))
           }
           var displayData = {
+            currentTime: currentTime,
             city: params.city,
             state: params.state,
+            currentTemp: temp,
+            condition: condition,
             predictionData: list
           }
           resolve(displayData)
