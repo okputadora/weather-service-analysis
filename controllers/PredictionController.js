@@ -27,17 +27,20 @@ module.exports = {
 
           // build model
           var forecast = {
-            city: params.city,
-            state: params.state,
-            timeOfPrediction: currentTime,
             timeOfFruition: end,
             temp: data[i].temp.english,
             condition: data[i].condition
           }
           forecasts.push(forecast)
         }
-        console.log('getting to here')
-        Prediction.collection.insertMany(forecasts, function(err, prediction){
+        var prediction = {
+          city: params.city,
+          state: params.state,
+          timeOfPrediction: currentTime,
+          forecasts: forecasts
+        }
+        console.log(prediction)
+        Prediction.create(prediction, function(err, prediction){
           if (err){
             console.log('couldnt create')
             reject(err)
@@ -78,33 +81,37 @@ module.exports = {
         var temp = data.temp_f
         var condition = data.weather
         // pull from the database
-        Prediction.find({state: params.state, city: params.city, timeOfFruition: '2018-02-03-19'}, function(err, predictions){
+        // , forecasts: {timeOfFruition: '2018-02-03-19'}
+        Prediction.find({state: params.state, city: params.city, forecasts: {$elemMatch: {timeOfFruition: currentTime}}}, function(err, predictions){
           if (err){
             reject(err)
             return
           }
-          resolve({
-            prediction: predictions,
-            actual: {
-              temp: temp,
-              condition: condition
-            }
-          })
+          var list = []
+          // instead of returning the whole array of forecasts,
+          // just return the one whos time of fruition matches the currentTime
+          for (var i=0; i < predictions.length; i++){
+            var prediction = predictions[i]
+            list.push(prediction.fruitionFilter(currentTime))
+          }
+          var displayData = {
+            city: params.city,
+            state: params.state,
+            predictionData: list
+          }
+          resolve(displayData)
         })
       })
     })
   },
 
   destroy: function(){
+    //this doesnt work!
     return new Promise(function(resolve, reject){
-      Predcition.remove({}, function(err, result){
-        if (err){
-          reject(err)
-          return
-        }
-        console.log("dropping the table")
-        resolve(result)
-      })
+      Predcition.collection.drop()
+      console.log("dropping the table")
+      resolve('deleted')
+      // })
     })
   }
 }

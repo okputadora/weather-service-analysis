@@ -27,7 +27,7 @@
           <div class='panel-heading'>Start a forecast</div>
           <div class='panel-body'>
             <p>
-              Pick a city that you want to test the weather accuracy for. This will take a
+              pick a city that you want to the weather accuracy for. This will take a
               snapshot of the 10 day forecast every hour and enter it into the database.
             </p>
             <p>
@@ -53,6 +53,10 @@
         </div>
           <form action='/wunder/displayDb' method='get'>
             <h4>View the database</h4>
+            <input type='submit' value='Enter' />
+          </form>
+          <form action='/wunder/delete' method='post'>
+            <h4>Clear the database</h4>
             <input type='submit' value='Enter' />
           </form>
         </div>
