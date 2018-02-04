@@ -59,23 +59,33 @@ router.post('/:action', function(req, res, next){
     return
   }
 })
-
+// router.get('/displayGraph', function(req, res, next){
+//
+// })
 router.get('/:action', function(req, res, next){
   var action = req.params.action
-
-  if (action == 'displayGraph'){
-    var city = req.query.city
-    var city = city.toLowerCase()
-    var state = req.query.state
-    var state = state.toLowerCase()
-    params = {
-      key: process.env.API_KEY,
-      city: city,
-      state: state
-    }
-    PredictionController.getByParams(params)
+  if (action == 'displayDb'){
+    PredictionController.get()
     .then(function(result){
-      console.log(result)
+      res.json(result)
+    })
+    .catch(function(err){
+      res.json(err)
+    })
+    return
+  }
+  var city = req.query.city
+  var city = city.toLowerCase()
+  var state = req.query.state
+  var state = state.toLowerCase()
+  params = {
+    key: process.env.API_KEY,
+    city: city,
+    state: state
+  }
+  PredictionController.getByParams(params)
+  .then(function(result){
+    if (action == 'loadView'){
       res.render('displayAccuracy', {
         title: 'Weather Accuracy',
         city: result.city,
@@ -87,22 +97,15 @@ router.get('/:action', function(req, res, next){
         partials: {
           header: '../views/partials/header'
         }
-      });
-      // res.json(result)
-    })
-    .catch(function(err){
-      res.json(err)
-    })
-  }
-  if (action == 'displayDb'){
-    PredictionController.get()
-    .then(function(result){
-      res.json(result)
-    })
-    .catch(function(err){
-      res.json(err)
-    })
-  }
+      })
+    }
+    if (action == 'displayGraph'){
+      res.json(result.predictionData)
+    }
+  })
+  .catch(function(err){
+    res.json(err)
+  })
 })
 
 module.exports = router;

@@ -26,7 +26,8 @@ PredictionSchema.methods.fruitionFilter = function(time){
   return {
     timeOfPrediction: this.timeOfPrediction,
     distance: distance,
-    forecast: forecast[0].temp
+    temp: forecast[0].temp,
+    condition: forecast[0].condition
   }
 }
 

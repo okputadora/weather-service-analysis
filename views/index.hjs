@@ -44,7 +44,7 @@
         <div class='panel panel-default'>
           <div class='panel-heading'>Display Accuracy</div>
           <div class='panel-body'>
-            <form action='/wunder/displayGraph' method='get'>
+            <form action='/wunder/loadView' method='get'>
               <input type='text' name='city'placeholder="city" />
               <input type'text' name='state' placeholder='state' />
               <input type='submit' value='submit'/>
