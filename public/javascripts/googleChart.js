@@ -12,23 +12,26 @@ function drawChart() {
     $.get('/wunder/displayGraph?city='+ city  +'&state='+ state, function(response) {
         console.log(response);
         var chartData = [];
-        // for(var idx = 0; idx < response.length; ++idx) {
-        //     var item = response[idx];
-        //     chartData.push([item.year, item.population]);
-        // }
+        for(var idx = 0; idx < response.length; ++idx) {
+            var item = response[idx];
+            chartData.push([parseInt(item.distance), parseInt(item.temp)]);
+        }
 
         // Create the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('number', 'time');
         data.addColumn('number', 'distance');
+        data.addColumn('number', 'temp');
         data.addRows(chartData);
 
         var options = {
-            title: 'Hungarian Population Change between 1870 and 2011'
+            title: 'weatherunderground accuracy',
+            curveType: 'function',
+            height: 600,
+            width: 600
         };
 
         //create and draw the chart from DIV
-        var chart = new google.visualization.LineChart(document.getElementById('linechart'));
+        var chart = new google.visualization.LineChart(document.getElementById('line-chart'));
         chart.draw(data, options);
     }, 'json');
 }
