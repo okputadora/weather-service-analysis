@@ -8,7 +8,7 @@ const router = express.Router()
 
 // begins the intiation of a new model-building process
 // models take a while to build cause we're waiting on real weather data to come
-// in each hour
+// in each hour. how do we run the script and this function every hour?
 router.post('/:action', function(req, res, next){
   var action = req.params.action
   if (action == 'delete'){
@@ -48,20 +48,21 @@ router.post('/:action', function(req, res, next){
     state: state
   }
   if (action == 'initiateModel'){
-    // initiate construction of the model
-    PredictionController.post(params)
-    .then(function(result){
-      res.json(result)
-    })
-    .catch(function(err){
-      res.json(err)
-    })
-    return
+    // initiate construction of the model every hour
+    // setInterval(function(){
+      console.log('making a new db entry')
+      PredictionController.post(params)
+      .then(function(result){
+        res.json(result)
+      })
+      .catch(function(err){
+        res.json(err)
+      })
+      return
+    // }, 1000 * 60 * 60)
   }
 })
-// router.get('/displayGraph', function(req, res, next){
-//
-// })
+
 router.get('/:action', function(req, res, next){
   var action = req.params.action
   if (action == 'displayDb'){
@@ -85,6 +86,10 @@ router.get('/:action', function(req, res, next){
   }
   PredictionController.getByParams(params)
   .then(function(result){
+    // this is not an optimal way to return the results...
+    // we are querying the database once to load the view and
+    // again to display the graph...we should load the view with all of the data
+    // hidden in an element
     if (action == 'loadView'){
       res.render('displayAccuracy', {
         title: 'Weather Accuracy',

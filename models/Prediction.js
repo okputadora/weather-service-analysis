@@ -21,6 +21,7 @@ PredictionSchema.methods.fruitionFilter = function(time){
   // get the distance of the prediction
   var predictionTime = moment(this.timeOfPrediction, "YYYY-MM-DD-HH")
   var fruitionTime = moment(time, "YYYY-MM-DD-HH")
+  // this should be switched so the time is negative 
   var distance = fruitionTime.diff(predictionTime, 'hours')
 
   return {

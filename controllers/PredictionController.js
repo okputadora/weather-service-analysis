@@ -9,7 +9,6 @@ module.exports = {
       var client = new Wunderground()
       var currentTime = moment().format('YYYY-MM-DD-HH')
       var forecasts = []
-      console.log(params)
       client.hourly10day(params, function(err, data){
         if (err){
           throw err
@@ -39,7 +38,6 @@ module.exports = {
           timeOfPrediction: currentTime,
           forecasts: forecasts
         }
-        console.log(prediction)
         Prediction.create(prediction, function(err, prediction){
           if (err){
             console.log('couldnt create')
