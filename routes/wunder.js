@@ -47,6 +47,7 @@ router.post('/:action', function(req, res, next){
     city: city,
     state: state
   }
+  console.log(params)
   if (action == 'initiateModel'){
     // initiate construction of the model every hour
     // setInterval(function(){

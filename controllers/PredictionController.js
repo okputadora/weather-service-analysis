@@ -71,6 +71,7 @@ module.exports = {
       console.log(currentTime)
       var client = new Wunderground()
       // get the current conditions
+      console.log(params)
       client.conditions(params, function(err, data){
         console.log('querying wunderapi')
         if (err){
