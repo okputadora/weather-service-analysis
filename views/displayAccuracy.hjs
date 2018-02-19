@@ -28,6 +28,8 @@
       <div id='line-chart'>
 
       </div>
+      <div id='root'></div>
+      <script type="text/javascript" src="/build/bundle.js"></script>
       <!-- we should put the data for drawing the graph in here so we dont hit the
       db twice -->
       <div class='data' style='display: none'>

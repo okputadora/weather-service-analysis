@@ -82,6 +82,7 @@ module.exports = {
         var condition = data.weather
         // pull from the database
         // , forecasts: {timeOfFruition: '2018-02-03-19'}
+        console.log('makes it to here but the db aint working')
         Prediction.find({state: params.state, city: params.city, forecasts: {$elemMatch: {timeOfFruition: currentTime}}}, function(err, predictions){
           if (err){
             reject(err)
