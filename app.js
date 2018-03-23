@@ -10,12 +10,12 @@ var index = require('./routes/index');
 var wunder = require('./routes/wunder');
 require('dotenv').config()
 
-mongoose.connect(MONGO_DB_URI, function(err, res){
+mongoose.connect(process.env.MONGO_DB_URI, function(err, res){
   if (err){
     console.log('DB CONNECTION FAILED: '+err)
   }
   else{
-    console.log('DB CONNECTION SUCCESS: '+MONGO_DB_URI)
+    console.log('DB CONNECTION SUCCESS: '+process.env.MONGO_DB_URI)
   }
 
 })
