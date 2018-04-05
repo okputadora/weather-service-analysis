@@ -2,7 +2,7 @@
 // generating accuracy stats for each type of forecast (i.e. 1day 2day 5day 10day etc)
 
 const express = require('express')
-const Wunderground = require('node-weatherunderground')
+var moment = require('moment')
 const PredictionController = require('../controllers/PredictionController')
 const router = express.Router()
 
@@ -73,9 +73,10 @@ router.get('/:action', function(req, res, next){
     return
   }
   var city = req.query.city
-  var city = city.toLowerCase()
+  city = city.toLowerCase()
   var state = req.query.state
-  var state = state.toLowerCase()
+  state = state.toLowerCase()
+  console.log(city)
   params = {
     key: process.env.API_KEY,
     city: city,
@@ -88,11 +89,15 @@ router.get('/:action', function(req, res, next){
     // again to display the graph...we should load the view with all of the data
     // hidden in an element
     if (action == 'loadView'){
+      // Format city and state and time
+      city = result.city.charAt(0).toUpperCase() + result.city.slice(1)
+      state = result.state.toUpperCase()
+      var time = moment(result.currentTime, "YYYY-MM-DD-HH").format("dddd, MMMM Do, YYYY")
       res.render('displayAccuracy', {
         title: 'Weather Accuracy',
-        city: result.city,
-        state: result.state,
-        time: result.currentTime,
+        city: city,
+        state: state,
+        time: time,
         temp: result.currentTemp,
         condition: result.condition,
         forecasts: result.predictionData,

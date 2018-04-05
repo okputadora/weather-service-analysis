@@ -4,3 +4,8 @@
 a {
   color: #00B7FF;
 }
+.line {
+    fill: none;
+    stroke: #ffab00;
+    stroke-width: 3;
+}
