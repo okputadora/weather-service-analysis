@@ -22,19 +22,15 @@ router.post('/:action', function(req, res, next){
     return
   }
   // Make sure the parameters are present
+  console.log(req.body)
   var city = req.body.city
-  if (city == null){
+  var state = req.body.state
+  console.log(city)
+
+  if (city == null || state == null){
     res.json({
       confirmation: 'fail',
       message: 'enter the name of a city'
-    })
-    return
-  }
-  var state = req.body.state
-  if (state == null){
-    res.json({
-      confirmation: 'fail',
-      message: 'enter the name of a state'
     })
     return
   }
@@ -47,13 +43,13 @@ router.post('/:action', function(req, res, next){
     city: city,
     state: state
   }
-  console.log(params)
   if (action == 'initiateModel'){
     // initiate construction of the model every hour
     // setInterval(function(){
       console.log('making a new db entry')
       PredictionController.post(params)
       .then(function(result){
+        console.log("success")
         res.json(result)
       })
       .catch(function(err){
