@@ -26,7 +26,7 @@ $(document).on("ready", function(){
     // define the line
     var valueline = d3.line()
       // smoothe the line
-      .curve(d3.curveBasis)
+      // .curve(d3.curveBasis)
       .x(function(d) { return x(d[0]); })
       .y(function(d) { return y(d[1]); });
 
@@ -55,7 +55,33 @@ $(document).on("ready", function(){
         .data([data])
         .attr("class", "line")
         .attr("d", valueline);
+    // Add tooltips to show data on hover
 
+    var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+    svg.selectAll("dot")
+     .data(data)
+     .enter().append("circle")
+       .attr("r", 20)
+       .attr("cx", function(d) { return x(d[0]); })
+       .attr("cy", function(d) { return y(d[1]); })
+       .style("opacity", 0)
+       .on("mouseover", function(d) {
+         var dHTML = Object.assign([], d)
+         var hoursAgo = dHTML[0].toString().slice(1)
+         div.transition()
+           .duration(200)
+           .style("opacity", .9);
+         div.html("Temp: "+d[1] + "(F)<br />Hours ago: "+hoursAgo)
+           .style("left", (d3.event.pageX) + "px")
+           .style("top", (d3.event.pageY - 28) + "px");
+         })
+       .on("mouseout", function(d) {
+         div.transition()
+           .duration(100)
+           .style("opacity", 0);
+         });
     // Add the X Axis
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
@@ -80,7 +106,7 @@ $(document).on("ready", function(){
       .attr("dy", "1em")
       .style("text-anchor", "middle")
       .text("Temp(F)");
-    // animate the line
+    // Add a legend
   })
 
 })
