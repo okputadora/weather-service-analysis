@@ -15,7 +15,7 @@ $(document).on("ready", function(){
     data = data.slice(9)
     console.log(data)
     // set the dimensions and margins of the graph
-    var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    var margin = {top: 20, right: 20, bottom: 50, left: 50},
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
@@ -37,10 +37,14 @@ $(document).on("ready", function(){
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
+        .attr("id", "graph")
         .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
     // Scale the range of the data
+    // two different ways to do this using extent which calculate min and max
+    // or calculating min and max ourselves
     x.domain(d3.extent(data, function(d) { return d[0]; }));
+    // equivalent to ^
     y.domain([
       d3.min(data, function(d){ return d[1] - 2}),
       d3.max(data, function(d) { return d[1] + 2})
@@ -57,8 +61,26 @@ $(document).on("ready", function(){
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x));
 
+    // text label for the x axis
+    svg.append("text")
+      .attr("transform",
+        "translate(" + (width/2) + " ," +
+         (height + margin.bottom -5) + ")")
+      .style("text-anchor", "middle")
+      .style("color", "black")
+      .text("Hours Ago");
     // Add the Y Axis
     svg.append("g")
-        .call(d3.axisLeft(y));
+      .call(d3.axisLeft(y));
+    // text label for the y axis
+    svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Temp(F)");
+    // animate the line
   })
+
 })
