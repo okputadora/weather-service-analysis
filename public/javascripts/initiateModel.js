@@ -8,6 +8,13 @@ $("#initiateModel").on("click", function(e){
   oneHour = 1000 * 60 * 60
   e.preventDefault()
   console.log("clicked")
+  $.ajax({
+    type: "POST",
+    url: "/wunder/initiateModel",
+    data: {city: city, state: state}
+  }).then(function(result){
+    console.log(result)
+  })
   setInterval(function(){
     $.ajax({
       type: "POST",

@@ -107,6 +107,8 @@ $(document).on("ready", function(){
       .style("text-anchor", "middle")
       .text("Temp(F)");
     // Add a legend
+    d3.select("#legend")
+      .append("div")
+        .html("<div id='wuLeg'>weatherunderground</div>")
   })
-
 })
