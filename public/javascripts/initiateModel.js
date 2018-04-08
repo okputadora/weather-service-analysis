@@ -10,7 +10,7 @@ $("#initiateModel").on("click", function(e){
   console.log("clicked")
   $.ajax({
     type: "POST",
-    url: "/wunder/initiateModel",
+    url: "/weather/initiateModel",
     data: {city: city, state: state}
   }).then(function(result){
     console.log(result)
@@ -18,7 +18,7 @@ $("#initiateModel").on("click", function(e){
   setInterval(function(){
     $.ajax({
       type: "POST",
-      url: "/wunder/initiateModel",
+      url: "/weather/initiateModel",
       data: {city: city, state: state}
     }).then(function(result){
       console.log(result)

@@ -2,7 +2,7 @@ $(document).on("ready", function(){
   // get the data
   var city = $("#city").html()
   var state = $("#state").html()
-  $.get('/wunder/displayGraph?city='+ city  +'&state='+ state, function(response) {
+  $.get('/weather/displayGraph?city='+ city  +'&state='+ state, function(response) {
     var data = [];
     for(var idx = 0; idx < response.length; ++idx) {
       var item = response[idx];

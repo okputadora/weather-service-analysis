@@ -3,7 +3,7 @@
 
 const express = require('express')
 var moment = require('moment')
-const PredictionController = require('../controllers/PredictionController')
+const weatherController = require('../controllers/weatherController')
 const router = express.Router()
 
 // begins the intiation of a new model-building process
@@ -39,7 +39,6 @@ router.post('/:action', function(req, res, next){
   city = city.toLowerCase();
   state = state.toLowerCase();
   var params = {
-    key: process.env.API_KEY,
     city: city,
     state: state
   }
@@ -47,7 +46,7 @@ router.post('/:action', function(req, res, next){
     // initiate construction of the model every hour
     // setInterval(function(){
       console.log('making a new db entry')
-      PredictionController.post(params)
+      weatherController.post(params)
       .then(function(result){
         console.log("success")
         res.json(result)
@@ -63,7 +62,7 @@ router.post('/:action', function(req, res, next){
 router.get('/:action', function(req, res, next){
   var action = req.params.action
   if (action == 'displayDb'){
-    PredictionController.get()
+    weatherController.get()
     .then(function(result){
       res.json(result)
     })
@@ -78,11 +77,11 @@ router.get('/:action', function(req, res, next){
   state = state.toLowerCase()
   console.log(city)
   params = {
-    key: process.env.API_KEY,
+    key: process.env.WUNDERGROUND_API_KEY,
     city: city,
     state: state
   }
-  PredictionController.getByParams(params)
+  weatherController.getByParams(params)
   .then(function(result){
     // this is not an optimal way to return the results...
     // we are querying the database once to load the view and

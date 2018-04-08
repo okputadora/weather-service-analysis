@@ -18,6 +18,7 @@
     "mongoose": "^5.0.2",
     "morgan": "~1.9.0",
     "node-weatherunderground": "^1.2.0",
+    "openweather-apis": "^3.3.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "serve-favicon": "~2.4.5"

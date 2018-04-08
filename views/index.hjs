@@ -39,18 +39,18 @@
         <div class='panel panel-default'>
           <div class='panel-heading'>Display Accuracy</div>
           <div class='panel-body'>
-            <form action='/wunder/loadView' method='get'>
+            <form action='/weather/loadView' method='get'>
               <input type='text' name='city'placeholder="city" />
               <input type'text' name='state' placeholder='state' />
               <input type='submit' value='submit'/>
             </form>
           </div>
         </div>
-          <form action='/wunder/displayDb' method='get'>
+          <form action='/weather/displayDb' method='get'>
             <h4>View the database</h4>
             <input type='submit' value='Enter' />
           </form>
-          <form action='/wunder/delete' method='post'>
+          <form action='weatherr/delete' method='post'>
             <h4>Clear the database</h4>
             <input type='submit' value='Enter' />
           </form>
