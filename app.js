@@ -15,7 +15,7 @@ mongoose.connect(process.env.MONGODB_URI, function(err, res){
     console.log('DB CONNECTION FAILED: '+err)
   }
   else{
-    console.log('DB CONNECTION SUCCESS: '+process.env.MONGODB_URI)
+    console.log('DB CONNECTION SUCCESS')
   }
 
 })
