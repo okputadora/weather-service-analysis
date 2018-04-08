@@ -1,5 +1,5 @@
-var openWeatherController = require("./openWeatherController")
-var wundergroundController = require("./wundergroundController")
+var openWeatherController = require("../controllers/openWeatherController")
+var wundergroundController = require("../controllers/wundergroundController")
 
 module.exports = {
   openWeather: openWeatherController,
