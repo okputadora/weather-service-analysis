@@ -9,7 +9,7 @@ const router = express.Router()
 router.get('/:action', function(req, res, next){
   var action = req.params.action
   if (action == 'displayDb'){
-    weatherController.get()
+    weatherController['wunderground'].get()
     .then(function(result){
       res.json(result)
     })
@@ -28,16 +28,12 @@ router.get('/:action', function(req, res, next){
     city: city,
     state: state
   }
-  weatherController.getByParams(params)
+  weatherController['wunderground'].getByParams(params)
   .then(function(result){
-    // this is not an optimal way to return the results...
-    // we are querying the database once to load the view and
-    // again to display the graph...we should load the view with all of the data
-    // hidden in an element
     if (action == 'loadView'){
       // Format city and state and time
-      city = result.city.charAt(0).toUpperCase() + result.city.slice(1)
-      state = result.state.toUpperCase()
+      var city = result.city.charAt(0).toUpperCase() + result.city.slice(1)
+      var state = result.state.toUpperCase()
       var time = moment(result.currentTime, "YYYY-MM-DD-HH").format("dddd, MMMM Do, YYYY")
       res.render('displayAccuracy', {
         title: 'Weather Accuracy',
