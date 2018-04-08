@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var index = require('./routes/index');
-var wunder = require('./routes/wunder');
+var weather = require('./routes/weather');
 require('dotenv').config()
 
 mongoose.connect(process.env.MONGODB_URI, function(err, res){
@@ -35,7 +35,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/wunder', wunder);
+app.use('/weather', weather);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

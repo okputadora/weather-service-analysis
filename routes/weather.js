@@ -6,59 +6,6 @@ var moment = require('moment')
 const weatherController = require('../controllers/weatherController')
 const router = express.Router()
 
-// begins the intiation of a new model-building process
-// models take a while to build cause we're waiting on real weather data to come
-// in each hour. how do we run the script and this function every hour?
-router.post('/:action', function(req, res, next){
-  var action = req.params.action
-  if (action == 'delete'){
-    PredictionController.destroy()
-    .then(function(result){
-      res.json(result)
-    })
-    .catch(function(err){
-      res.json(err)
-    })
-    return
-  }
-  // Make sure the parameters are present
-  console.log(req.body)
-  var city = req.body.city
-  var state = req.body.state
-  console.log(city)
-
-  if (city == null || state == null){
-    res.json({
-      confirmation: 'fail',
-      message: 'enter the name of a city'
-    })
-    return
-  }
-  // i should be able to set this in the model but for some reason
-  // 'lowercase: true' is not working
-  city = city.toLowerCase();
-  state = state.toLowerCase();
-  var params = {
-    city: city,
-    state: state
-  }
-  if (action == 'initiateModel'){
-    // initiate construction of the model every hour
-    // setInterval(function(){
-      console.log('making a new db entry')
-      weatherController.post(params)
-      .then(function(result){
-        console.log("success")
-        res.json(result)
-      })
-      .catch(function(err){
-        res.json(err)
-      })
-      return
-    // }, 1000 * 60 * 60)
-  }
-})
-
 router.get('/:action', function(req, res, next){
   var action = req.params.action
   if (action == 'displayDb'){
