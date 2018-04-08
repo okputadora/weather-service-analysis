@@ -34,7 +34,7 @@ $(document).on("ready", function(){
     .append("div")
       .html("<div id='wuLeg'>weatherunderground</div>")
   // wunderground retrieval from db
-  var url = '/weather/displayGraph?city='+ city  +'&state='+ state +'&service=wunderground'
+  var url = '/weather/displayGraph?city='+ city  +'&state='+ state
   console.log(url)
   $.get(url, function(response){
     var data = [];
@@ -60,8 +60,8 @@ $(document).on("ready", function(){
     ]);
     // equivalent to ^
     y.domain([
-      d3.min(data, function(d){ return d[1] - 2}),
-      d3.max(data, function(d) { return d[1] + 2})
+      d3.min(data, function(d){ return d[1]}),
+      d3.max(data, function(d) { return d[1]})
     ]);
 
     // Add the valueline path.
