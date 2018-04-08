@@ -30,6 +30,8 @@ router.get('/:action', function(req, res, next){
   }
   weatherController['wunderground'].getByParams(params)
   .then(function(result){
+    // we dont need all of the forecasts to load the view,
+    // just the currentTemp
     if (action == 'loadView'){
       // Format city and state and time
       var city = result.city.charAt(0).toUpperCase() + result.city.slice(1)
