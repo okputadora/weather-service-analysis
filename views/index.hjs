@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
   <head>
     <title>{{ title }}</title>
@@ -6,9 +5,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
       integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel='stylesheet' href='/stylesheets/style.css' />
-
+    <script
+    src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+    crossorigin="anonymous">
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
   <script
     src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
     integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
@@ -16,47 +20,28 @@
   </script>
   <body>
     {{> header}}
+    <div class='container custom-container'>
+      <h3><span id='city'>{{city}}</span>, <span id='state'>{{state}}</span></h3>
+      <h4>{{time}}</h4>
+      <p>Current Conditions: <span id='temp'>{{temp}}</span> degrees and {{condition}}</p>
+      <div id="line"></div>
+      <div id="legend"></div>
+    </div>
     <div class='container'>
-      <div class='row'>
-        <div class='panel panel-default'>
-          <div class='panel-heading'>Start a forecast</div>
-          <div class='panel-body'>
-            <p>
-              pick a city that you want to the weather accuracy for. This will take a
-              snapshot of the 10 day forecast every hour and enter it into the database.
-            </p>
-            <p>
-              when you display the accuracy, the current weather will be compared with
-              the predictions from these snapshots
-            </p>
-            <form>
-              <input id="city"type='text' name='city'placeholder="city" />
-              <input id="state"type'text' name='state' placeholder='state' />
-              <input id="initiateModel" type='submit' value='submit'/>
-            </form>
-          </div>
-          </div>
-        <div class='panel panel-default'>
-          <div class='panel-heading'>Display Accuracy</div>
-          <div class='panel-body'>
-            <form action='/weather/loadView' method='get'>
-              <input type='text' name='city'placeholder="city" />
-              <input type'text' name='state' placeholder='state' />
-              <input type='submit' value='submit'/>
-            </form>
-          </div>
-        </div>
-          <form action='/weather/displayDb' method='get'>
-            <h4>View the database</h4>
-            <input type='submit' value='Enter' />
-          </form>
-          <form action='weatherr/delete' method='post'>
-            <h4>Clear the database</h4>
-            <input type='submit' value='Enter' />
-          </form>
+      <div class="panel panel-default">
+        <div class="panel-heading"><strong>How to read this graph</strong></div>
+        <div class='panel-body'>
+          <p>
+            The x axis represents the time at which a forecast was made for the
+            temperature right now. The Y axis represents the value of that
+            temperature prediction. Thus, all points on the line represent a
+            forecast for the current temperature. The left side of the x-axis
+            represents the oldest forecast, and the right side represents the
+            most recent.
+          </p>
         </div>
       </div>
     </div>
-    <script type="text/javascript" src="/javascripts/initiateModel.js"></script>
   </body>
-</html>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script type="text/javascript" src="/javascripts/graph.js"></script>

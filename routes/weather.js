@@ -18,7 +18,7 @@ router.get('/:action', (req, res, next) => {
   if (action == 'displayGraph'){
     console.log("displaying graph")
     var apiRequests = [controllers['wunderground'].getByParams(params),
-      // controllers['openWeather'].getByParams(params)
+      // controllers['accuWeather'].getForecasts(params)
     ]
     console.log("stored promises in an array")
     Promise.all(apiRequests).then((responses) => {
@@ -34,12 +34,20 @@ router.get('/:action', (req, res, next) => {
   else {
     controllers['wunderground'].getCurrentConditions(params)
     .then((result) => {
-      res.render('displayAccuracy', {
+      // format the info
+      city = city[0].toUpperCase() + city.slice(1)
+      state = state.toUpperCase()
+      var time = moment(result.time, "YYYY-MM-DD-HH").format("dddd, MMMM Do, YYYY")
+      res.render('/', {
         city: city,
         state: state,
-        time: result.time,
+        time: time,
         temp: result.temp,
-        condition: result.condition
+        condition: result.condition,
+        title: "Weather Accuracy",
+        partials:{
+          header: "partials/header"
+        }
       })
     })
     .catch((err) => {

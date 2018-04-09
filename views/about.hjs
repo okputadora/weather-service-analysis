@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+    integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+    crossorigin="anonymous">
+  </script>
+  <body>
+    {{> header}}
+    <div class='container'>
+      <div class='row'>
+        <div class='panel panel-default'>
+          <div class='panel-heading'>Overview</div>
+          <div class='panel-body'>
+            <p>
+              pick a city that you want to the weather accuracy for. This will take a
+              snapshot of the 10 day forecast every hour and enter it into the database.
+            </p>
+            <p>
+              when you display the accuracy, the current weather will be compared with
+              the predictions from these snapshots
+            </p>
+            <form>
+              <input id="city"type='text' name='city'placeholder="city" />
+              <input id="state"type'text' name='state' placeholder='state' />
+              <input id="initiateModel" type='submit' value='submit'/>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

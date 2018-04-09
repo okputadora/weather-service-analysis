@@ -4,9 +4,11 @@ $(document).on("ready", function(){
   var state = $("#state").html()
   // initialize the graph
   // set the dimensions and margins of the graph
+  var containerWidth = $("#line").width()
+  var containerHeight = $("#line").height()
   var margin = {top: 20, right: 20, bottom: 50, left: 50},
-      width = 960 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+      width = containerWidth - margin.left - margin.right,
+      height = containerHeight - margin.top - margin.bottom;
 
   // set the ranges
   var x = d3.scaleLinear().range([0, width]);
@@ -60,8 +62,8 @@ $(document).on("ready", function(){
     ]);
     // equivalent to ^
     y.domain([
-      d3.min(data, function(d){ return d[1]}),
-      d3.max(data, function(d) { return d[1]})
+      d3.min(data, function(d){ return parseInt(d[1]) - 1}),
+      d3.max(data, function(d) { return parseInt(d[1]) + 1})
     ]);
 
     // Add the valueline path.
@@ -94,6 +96,13 @@ $(document).on("ready", function(){
       .attr("dy", "1em")
       .style("text-anchor", "middle")
       .text("Temp(F)");
+  })
+  var resizeTimer;
+  $(window).on("resize", function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function(){
+      location.reload()
+    }, 350)
   })
 
   // API request from openWeather (they have access to historical data, so we
