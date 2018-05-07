@@ -40,21 +40,20 @@ $(document).on("ready", function(){
   console.log(url)
   $.get(url, function(response){
     var data = [];
-    console.log(response)
     for(var idx = 0; idx < response.length; ++idx) {
       var item = response[idx];
       var distance = parseInt(item.distance)
       if (distance != 0){
         distance *= -1
-        data.push([distance, parseInt(item.temp)]);
+        data.unshift([distance, parseInt(item.temp)]);
       }
     }
-    // console.log(data)
+    console.log(data)
     // add the current temperature to the graph
     var currentTemp = $("#temp").html()
     console.log(currentTemp)
     data.push([0, currentTemp])
-
+    data.sort(compare)
     // Scale the range of the data
     x.domain([
       d3.min(data, function(d) { return d[0]; }),
@@ -104,6 +103,16 @@ $(document).on("ready", function(){
       location.reload()
     }, 350)
   })
+
+  function compare(a,b) {
+  if (a[0] < b[0])
+    return -1;
+  if (a[0] > b[0])
+    return 1;
+  return 0;
+}
+
+
 
   // API request from openWeather (they have access to historical data, so we
   // don't need to log their data in our own database)
