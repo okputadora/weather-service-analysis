@@ -12,7 +12,6 @@
 
     <div class='collapse navbar-collapse' id='nav-menu'>
       <ul class='nav navbar-nav navbar-right'>
-        <li><a href='/about'>How this works</a></li>
         <li><a href='https://github.com/okputadora/weather-service-analysis'>github</a></li>
       </ul>
     </div>
